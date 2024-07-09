@@ -60,13 +60,6 @@ const LineChart = ({ labels, data }) => {
   return <canvas ref={chartRef} />;
 };
 
-
-
-
-
-
-
-
 function Home() {
   const [labelstime, setLabels] = useState([0]);
   const [datascore, setData] = useState([0]);
@@ -242,9 +235,6 @@ function Home() {
   }, []);
 
 
-
-  
-
   const [recipientEmail, setRecipientEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [doubt, setDoubt] = useState('');
@@ -320,41 +310,20 @@ function Home() {
     return () => clearInterval(intervalId); // Clean up interval on component unmount
   }, []);
 
-
-
-
-  
-
-
-
-
-
   return (
     <div>
-
-
-
       <br></br>
       <center>
       <h1 className="mb-4 content-center text-3xl font-extrabold text-gray-900 dark:text-red md:text-5xl lg:text-6xl"><span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Online Classroom </span> Engagement Enhancer</h1>
-
       </center>
       <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400"></p>
 
       <div>
-         
-      
       <div className='grid grid-cols-2 gap-10'>
         <div className="m-4" >
-         
-
-          
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
           <input onChange={handleFileChange} className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" />
           <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
-
-         
-          
           <video src={playvideo} className="w-full h-auto max-w-full border border-gray-200 rounded-lg dark:border-gray-700" controls>
           </video>
           <br />
