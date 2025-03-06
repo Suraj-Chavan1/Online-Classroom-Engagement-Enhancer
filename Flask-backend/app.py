@@ -209,7 +209,7 @@ def create_pdf(filename, text):
     c.save()
 
 def gen_summary(article_text):
-    GOOGLE_API_KEY="AIzaSyC2TCkH-CUTuMVHzm7AVUXJ6Zy0kb18Z-Y"
+    GOOGLE_API_KEY=""
 
     genai.configure(api_key=GOOGLE_API_KEY)
 
@@ -223,7 +223,7 @@ def gen_summary(article_text):
 
 
 def generate_flowchart(text):
-    GOOGLE_API_KEY="AIzaSyC2TCkH-CUTuMVHzm7AVUXJ6Zy0kb18Z-Y"
+    GOOGLE_API_KEY=""
     genai.configure(api_key=GOOGLE_API_KEY)
     model = genai.GenerativeModel('gemini-1.5-flash')
     response = model.generate_content(["summarise the text given",text])
@@ -268,7 +268,7 @@ def generate_flowchart(text):
     
     
 def generate_flowchart_advance(text):
-    GOOGLE_API_KEY="AIzaSyC2TCkH-CUTuMVHzm7AVUXJ6Zy0kb18Z-Y"
+    GOOGLE_API_KEY=""
 
     genai.configure(api_key=GOOGLE_API_KEY)
 
@@ -366,7 +366,7 @@ def get_transcript():
     result = ' '.join(map(str, values))
     return result
 
-os.environ['GOOGLE_API_KEY'] = "AIzaSyC2TCkH-CUTuMVHzm7AVUXJ6Zy0kb18Z-Y"
+os.environ['GOOGLE_API_KEY'] = ""
 genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
 
 # Select the model
@@ -419,7 +419,7 @@ def llm_function(query):
 def generateimage(transcription):
     if transcription == "":
         return None
-    genai.configure(api_key="AIzaSyC2TCkH-CUTuMVHzm7AVUXJ6Zy0kb18Z-Y")
+    genai.configure(api_key="")
     model = genai.GenerativeModel('gemini-1.5-flash')
 
     response = model.generate_content(["Given a transcription, find out the core theme of the topic and generate a prompt suitable for text-to-image generation to create relevant image illustrations. Consider the tone, mood, and key elements of the transcription to guide the creation of the visual representation. Ensure that the generated prompt captures the essence and context of the text accurately for effective visual storytelling. Transcription : ", transcription])
