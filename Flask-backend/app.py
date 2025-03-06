@@ -43,10 +43,6 @@ from flask import jsonify
 from flask import jsonify
 
 
-client = pymongo.MongoClient("mongodb+srv://admin:ZdltdZvnbWb0aUk7@cluster0.oygcfbr.mongodb.net/")
-db = client["Pict-Project"]
-collection_Questions = db["Questions"]
-collection_Transcript = db["Transcript"]
 correct_answer_score = 0
 wrong_answer_score = 0
 total_score = 0
@@ -213,11 +209,11 @@ def create_pdf(filename, text):
     c.save()
 
 def gen_summary(article_text):
-    GOOGLE_API_KEY="AIzaSyBtsmDXZBwuEM7mKoycKhirwoxoAewKb_o"
+    GOOGLE_API_KEY="AIzaSyC2TCkH-CUTuMVHzm7AVUXJ6Zy0kb18Z-Y"
 
     genai.configure(api_key=GOOGLE_API_KEY)
 
-    model = genai.GenerativeModel('gemini-pro')
+    model = genai.GenerativeModel('gemini-1.5-flash')
     response = model.generate_content(["summarise text using bullets with multiple titles ",article_text])
     final_text=response.text
     to_markdown(final_text)
@@ -227,9 +223,9 @@ def gen_summary(article_text):
 
 
 def generate_flowchart(text):
-    GOOGLE_API_KEY="AIzaSyBtsmDXZBwuEM7mKoycKhirwoxoAewKb_o"
+    GOOGLE_API_KEY="AIzaSyC2TCkH-CUTuMVHzm7AVUXJ6Zy0kb18Z-Y"
     genai.configure(api_key=GOOGLE_API_KEY)
-    model = genai.GenerativeModel('gemini-pro')
+    model = genai.GenerativeModel('gemini-1.5-flash')
     response = model.generate_content(["summarise the text given",text])
     to_markdown(response.text)
     summary=response.text
@@ -272,11 +268,11 @@ def generate_flowchart(text):
     
     
 def generate_flowchart_advance(text):
-    GOOGLE_API_KEY="AIzaSyBtsmDXZBwuEM7mKoycKhirwoxoAewKb_o"
+    GOOGLE_API_KEY="AIzaSyC2TCkH-CUTuMVHzm7AVUXJ6Zy0kb18Z-Y"
 
     genai.configure(api_key=GOOGLE_API_KEY)
 
-    model = genai.GenerativeModel('gemini-pro')
+    model = genai.GenerativeModel('gemini-1.5-flash')
 
 
     # Text to be summarized
@@ -370,11 +366,11 @@ def get_transcript():
     result = ' '.join(map(str, values))
     return result
 
-os.environ['GOOGLE_API_KEY'] = "AIzaSyDLSIlCEg-hm7EC36BEEh0ZULMC2p0lpkk"
+os.environ['GOOGLE_API_KEY'] = "AIzaSyC2TCkH-CUTuMVHzm7AVUXJ6Zy0kb18Z-Y"
 genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
 
 # Select the model
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('gemini-1.5-flash')
 
 # Initialize chat history
 messages = [
@@ -423,8 +419,8 @@ def llm_function(query):
 def generateimage(transcription):
     if transcription == "":
         return None
-    genai.configure(api_key="AIzaSyBtsmDXZBwuEM7mKoycKhirwoxoAewKb_o")
-    model = genai.GenerativeModel('gemini-pro')
+    genai.configure(api_key="AIzaSyC2TCkH-CUTuMVHzm7AVUXJ6Zy0kb18Z-Y")
+    model = genai.GenerativeModel('gemini-1.5-flash')
 
     response = model.generate_content(["Given a transcription, find out the core theme of the topic and generate a prompt suitable for text-to-image generation to create relevant image illustrations. Consider the tone, mood, and key elements of the transcription to guide the creation of the visual representation. Ensure that the generated prompt captures the essence and context of the text accurately for effective visual storytelling. Transcription : ", transcription])
     to_markdown(response.text)
@@ -472,8 +468,14 @@ def transcribe_video_api():
     data = request.get_json()
     video_path = data.get('video_path', '')
     print(video_path)
+    
+    # Check if the file exists
+    if not os.path.isfile(video_path):
+        return jsonify({"error": f"Video file not found: {video_path}. Please provide a valid absolute path."}), 404
+        
     api_key = "8d5a3a57e9e84a5aa440531dbbc6c757"
     aai.settings.api_key = api_key
+
 
     # Initialize the transcriber
     transcriber = aai.Transcriber()
@@ -540,11 +542,13 @@ def transcribe_video_api():
 
 @app.route('/get_question', methods=['GET'])
 def get_question_api():
+    print(question_json)
     return json.loads(json_util.dumps(question_json))
 
 
 @app.route('/get_current_question', methods=['GET'])
 def get_current_question_api():
+    print(current_question)
     return json.loads(json_util.dumps(current_question))
 
 @app.route('/get_transcript', methods=['GET'])
